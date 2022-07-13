@@ -7,5 +7,11 @@ bcrypt = Bcrypt(app)
 
 @app.route('/')
 def index():
-  data = { 'id' : 1 }
-  return render_template('index.html', patient=User.get_one_by_id(data), all_patients=User.get_all)
+  return render_template('index.html', patient=User.get_one_by_id(), all_patients=User.get_all)
+
+@app.route('/patient/id', methods=['POST'])
+def get_patient_id():
+  data = {
+    "pat_id" : request.form["pat_id"],
+  }
+  return redirect('/')

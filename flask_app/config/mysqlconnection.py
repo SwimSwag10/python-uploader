@@ -6,8 +6,8 @@ from settings.settings import MYSQL_PASSCODE, MYSQL_USER
 class MySQLConnection:
     def __init__(self, db):
         connection = pymysql.connect(host = 'localhost',
-                                    user = MYSQL_USER, # change the user and password as needed
-                                    password = MYSQL_PASSCODE, 
+                                    user = 'root', # change the user and password as needed
+                                    password = 'root', 
                                     db = db,
                                     charset = 'utf8mb4',
                                     cursorclass = pymysql.cursors.DictCursor,

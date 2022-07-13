@@ -7,14 +7,14 @@ EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 client = siaskynet.SkynetClient()
 
 class User:
-  db = 'personal'  
+  db = 'demo'  
 
   def __init__(self,data):
-    self.first_name = data['first_name']
-    self.last_name = data['last_name']
-    # self.patient_number = data['patnum']
-    # self.first_name = data['fname']
-    # self.last_name = data['lname']
+    # self.first_name = data['first_name']
+    # self.last_name = data['last_name']
+    self.patient_number = data['patnum']
+    self.first_name = data['fname']
+    self.last_name = data['lname']
 
   @classmethod
   def get_all(cls):
@@ -22,7 +22,7 @@ class User:
 
     # sql query selecting all patients in the database
     query = """
-    SELECT * FROM user;
+    SELECT * FROM patient;
     """
 
     # the result of the query on the database. This is a tuple.
@@ -36,20 +36,29 @@ class User:
     # return all_users
 
   @classmethod
-  def get_one_by_id(cls,data):
+  def get_one_by_id(cls):
+
+    data = { 'patnum' : 7 }
 
     query = """
-    SELECT * FROM user 
-    WHERE id = %(id)s;
+    SELECT * FROM patient 
+    WHERE patnum = %(patnum)s;
     """
 
     results = connectToMySQL(cls.db).query_db(query,data)
     
+    # print(f"THIS IS THE UNREFINED QUERY RESULTS: {results}")
+    # print(f"THIS IS THE REFINED QUERY RESULTS: {results[0]}")
+
     # this is a test for the skylink upload file method
-    skylink = client.upload_file("../../testing.txt")
+    skylink = client.upload_file("api/python_skynet/siaskynet/testing.txt")
     print("Upload successful, skylink: " + skylink)
 
     if len(results) < 1:
       return False
+
+    #  take results and put it into a the upload method for skylink.
+    # skylink = client.upload(results[0])
+    # print("Upload successful, skylink: " + skylink)
 
     return results

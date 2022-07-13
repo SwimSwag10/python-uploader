@@ -11,10 +11,20 @@
 <body class="container">
   <div class="row">
 
-      <div class="col">
-        <h1>{{ patient.fname }}</h1>
-        <p>{{ patient }}</p>
-      </div>
+    <div class="col">
+      <form action="/patient/id" method="post">
+        <p class="row">id of patient:</p>
+        <input type="number" name="pat_id">
+        <input type="submit" name="Search" class="btn btn-primary">
+      </form>
+      {% if session["id"] %}
+        <p>do something</p>
+      {% endif %}
+    </div>
+    <div class="col">
+      <h1>{{ patient[0].LName }}</h1>
+      <p>{{ patient[0].LName }}</p>
+    </div>
     
   </div>
 </body>
